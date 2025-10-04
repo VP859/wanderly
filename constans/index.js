@@ -10,30 +10,30 @@ export const tourList=[
       require('@/assets/images/seszele1.jpg'),
       require('@/assets/images/seszele2.jpg')
     ],description:"Seszele to archipelag na Oceanie Indyjskim, znany z białych plaż, turkusowych wód i luksusowych kurortów. Idealne miejsce na relaks i nurkowanie.",
-  days:10, price:799, rating:4.7, reviews:72,},
+  days:10, price:321, rating:4.7, reviews:72,
+isFavorite:false},
     {name:"Rzym", location1:"Koloseum",location2:"East java",country:"Włochy",cr:"🇮🇹", price:250, image:[
       require('@/assets/images/rzym.jpg'),
       require('@/assets/images/rzym1.jpg'),
       require('@/assets/images/rzym2.jpg')
     ],description:"Rzym, stolica Włoch, to miasto pełne historii, kultury i sztuki. Znane z Koloseum, Watykanu i licznych zabytków, oferuje niezapomniane doświadczenia.",
-  days:10, price:799, rating:4.7, reviews:72,},
+  days:10, price:100, rating:4.7, reviews:72,isFavorite:false},
     {name:"Tatry", location1:"Magelang",location2:"East java",country:"Polska",cr:"🇵🇱", price:300, image:[
       require('@/assets/images/tatry.jpg'),
       require('@/assets/images/tatry.jpg'),
     ],description:"Tatry to najwyższe pasmo górskie w Polsce, idealne dla miłośników przyrody i aktywnego wypoczynku. Oferują malownicze szlaki turystyczne i zimowe atrakcje.",
-  days:6, price:599, rating:4.8, reviews:64,},
+  days:6, price:599, rating:4.8, reviews:64,isFavorite:false},
     {name:"Tatry", location1:"Magelang",location2:"East java",country:"Polska",cr:"🇵🇱", price:300, image:[
       require('@/assets/images/tatry.jpg'),
       require('@/assets/images/tatry.jpg'),
     ],description:"Tatry to najwyższe pasmo górskie w Polsce, idealne dla miłośników przyrody i aktywnego wypoczynku. Oferują malownicze szlaki turystyczne i zimowe atrakcje.",
-  days:10, price:799, rating:4.7, reviews:72,},
+  days:10, price:799, rating:4.7, reviews:72,isFavorite:false},
     {name:"Bieszczady", location1:"Szyszków",location2:"Potok Górny",country:"Polska",cr:"🇵🇱", price:300, image:[
       require('@/assets/images/szyszkow.jpg'),
       require('@/assets/images/rzym.jpg'),
       require('@/assets/images/tatry.jpg')
     ],description:"Tatry to najwyższe pasmo górskie w Polsce, idealne dla miłośników przyrody i aktywnego wypoczynku. Oferują malownicze szlaki turystyczne i zimowe atrakcje. ",
-  days:10, price:799, rating:4.7, reviews:72,},
-    
+  days:10, price:280, rating:4.7, reviews:72,isFavorite:false},
   ]
 
   

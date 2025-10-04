@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
+import { useFavoritesStore } from "@/app/store";
 import { ReadMoreText } from "@/components/readmore";
 import { places } from "@/constans";
 import { ImageBackground } from "expo-image";
@@ -32,32 +33,34 @@ const TourCard = ({
   price,
   rating,
   reviews,
-}: TourCardProps) => {return (
-<TouchableOpacity
-  style={styles.tourCard}
-  onPress={() => {
-    router.push(`/miejsca/${name.toLowerCase().replace(/\s+/g, "-")}`);
-  }}
->
-  <Image
-    source={typeof cover === "string" ? { uri: cover } : cover}
-    style={styles.tourImage}
-  />
-  <TouchableOpacity style={styles.heartIcon}>
-    <Ionicons name="heart-outline" size={18} color="#000" />
-  </TouchableOpacity>
-  <Text style={styles.tourName}>{name}</Text>
-  <Text style={styles.tourDetails}>
-    {days} days · from ${price}/person
-  </Text>
-  <Text style={styles.tourRating}>
-    ⭐ {rating} · {reviews} reviews
-  </Text>
-</TouchableOpacity>)}
+}: TourCardProps) => {
+  return (
+    <TouchableOpacity
+      style={styles.tourCard}
+      onPress={() => {
+        router.push(`/miejsca/${name.toLowerCase().replace(/\s+/g, "-")}`);
+      }}
+    >
+      <Image
+        source={typeof cover === "string" ? { uri: cover } : cover}
+        style={styles.tourImage}
+      />
+      <TouchableOpacity style={styles.heartIcon}>
+        <Ionicons name="heart-outline" size={18} color="#000" />
+      </TouchableOpacity>
+      <Text style={styles.tourName}>{name}</Text>
+      <Text style={styles.tourDetails}>
+        {days} days · from ${price}/person
+      </Text>
+      <Text style={styles.tourRating}>
+        ⭐ {rating} · {reviews} reviews
+      </Text>
+    </TouchableOpacity>
+  );
+};
 
 const CityScreen = ({ params }: Readonly<{ params: { id: string } }>) => {
   const { id } = useLocalSearchParams();
-  const [isFavorite, setIsFavorite] = useState(false);
   const [currentPlace, setCurrentPlace] = useState(
     places.find(
       (place) => place.name.toLowerCase() === id?.toString().toLowerCase()
@@ -71,18 +74,20 @@ const CityScreen = ({ params }: Readonly<{ params: { id: string } }>) => {
   }, [id]);
 
   console.log(currentPlace);
-  const toggleFavorite = () => {
-    setIsFavorite(!isFavorite);
-  };
 
   const [index, setIndex] = useState(1);
+]
 
   const goPrev = () => {
-    setIndex((prev) => (prev === 0 ? (currentPlace?.image?.length || 1) - 1 : prev - 1));
+    setIndex((prev) =>
+      prev === 0 ? (currentPlace?.image?.length || 1) - 1 : prev - 1
+    );
   };
 
   const goNext = () => {
-    setIndex((prev) => (prev === (currentPlace?.image?.length || 1) - 1 ? 0 : prev + 1));
+    setIndex((prev) =>
+      prev === (currentPlace?.image?.length || 1) - 1 ? 0 : prev + 1
+    );
   };
 
   return (
@@ -90,10 +95,22 @@ const CityScreen = ({ params }: Readonly<{ params: { id: string } }>) => {
       {/* Tło - główne zdjęcie */}
 
       <Image source={currentPlace?.image[index]} style={carosel.image} />
-      <TouchableOpacity onPress={goPrev} style={[carosel.arrowButton, { left: 0, position: 'absolute',marginTop:100 }]}>
+      <TouchableOpacity
+        onPress={goPrev}
+        style={[
+          carosel.arrowButton,
+          { left: 0, position: "absolute", marginTop: 100 },
+        ]}
+      >
         <Text style={carosel.arrowText}>⬅️</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={goNext} style={[carosel.arrowButton, { right: 0, position: 'absolute' ,marginTop:100 }]}>
+      <TouchableOpacity
+        onPress={goNext}
+        style={[
+          carosel.arrowButton,
+          { right: 0, position: "absolute", marginTop: 100 },
+        ]}
+      >
         <Text style={[carosel.arrowText]}>➡️</Text>
       </TouchableOpacity>
       {/* Sekcja miasta */}
@@ -101,10 +118,16 @@ const CityScreen = ({ params }: Readonly<{ params: { id: string } }>) => {
         <View style={styles.cityHeader}>
           <Text style={styles.cityTitle}>{currentPlace?.location1}</Text>
           <FontAwesome
-            name={isFavorite ? "heart" : "heart-o"}
+            name={
+              favorites.find((p) => p.name === currentPlace?.name)
+                ? "heart"
+                : "heart-o"
+            }
             size={24}
-            color={isFavorite ? "red" : "black"}
-            onClick={toggleFavorite}
+            color={
+              favorites.find((p) => p.name === currentPlace?.name) ? "red" : "black"
+            }
+            onPress={() => currentPlace && toggleFavorite(currentPlace)}
             style={{ cursor: "pointer" }}
           />
         </View>
@@ -274,13 +297,13 @@ export default CityScreen;
 
 const carosel = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     marginTop: 0,
   },
   arrowButton: {
-    position: 'absolute',
+    position: "absolute",
   },
   arrowText: {
     fontSize: 30,
