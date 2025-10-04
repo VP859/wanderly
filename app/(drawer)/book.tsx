@@ -8,6 +8,7 @@ import { places } from "../../constans";
 
 export default function About(){
   const [isFocused, setIsFocused] = React.useState(false);
+  const [searchText, setSearchText] = React.useState<String>();
 
   return(
     <ScrollView style={{flex:1,backgroundColor:'white'}} contentContainerStyle={{alignItems:'center', gap:15}}>
@@ -21,10 +22,12 @@ export default function About(){
           onBlur={() => setIsFocused(false)}
           autoFocus={false}
           style={styles.input}
+          onChangeText={(text) => setSearchText(text)}
+          value={searchText?.toString()}
           placeholder="Szukaj..."
         />
         </View>
-         {places.map((place,index)=>(
+         {places.filter(place => place.name.toLowerCase().includes(searchText?.toLowerCase() || "")).map((place,index)=>(
            <Link
            key={index}
           href={`/miejsca/${place.name.toLocaleLowerCase()}`}>
