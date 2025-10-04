@@ -23,17 +23,22 @@ isFavorite:false},
       require('@/assets/images/tatry.jpg'),
     ],description:"Tatry to najwyższe pasmo górskie w Polsce, idealne dla miłośników przyrody i aktywnego wypoczynku. Oferują malownicze szlaki turystyczne i zimowe atrakcje.",
   days:6, rating:4.8, reviews:64,isFavorite:false},
+
     {name:"Tatry", location1:"Magelang",location2:"East java",country:"Polska",cr:"🇵🇱", price:300, image:[
       require('@/assets/images/tatry.jpg'),
       require('@/assets/images/tatry.jpg'),
     ],description:"Tatry to najwyższe pasmo górskie w Polsce, idealne dla miłośników przyrody i aktywnego wypoczynku. Oferują malownicze szlaki turystyczne i zimowe atrakcje.",
+
   days:10, rating:4.7, reviews:72,isFavorite:false},
+
     {name:"Bieszczady", location1:"Szyszków",location2:"Potok Górny",country:"Polska",cr:"🇵🇱", price:300, image:[
       require('@/assets/images/szyszkow.jpg'),
       require('@/assets/images/rzym.jpg'),
       require('@/assets/images/tatry.jpg')
     ],description:"Tatry to najwyższe pasmo górskie w Polsce, idealne dla miłośników przyrody i aktywnego wypoczynku. Oferują malownicze szlaki turystyczne i zimowe atrakcje. ",
+
   days:10, rating:4.7, reviews:72,isFavorite:false},
+
   ]
 
   

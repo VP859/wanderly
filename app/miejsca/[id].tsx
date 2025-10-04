@@ -32,7 +32,7 @@ const TourCard = ({
   rating,
   reviews,
 }: TourCardProps) => {
-  const router = useRouter();
+
   return (
     <TouchableOpacity
       style={styles.tourCard}
@@ -75,6 +75,7 @@ const CityScreen = ({ params }: Readonly<{ params: { id: string } }>) => {
   console.log(currentPlace);
 
   const [index, setIndex] = useState(1);
+
   const favorites = useFavoritesStore((state: { favorites: any; }) => state.favorites);
   const toggleFavorite = useFavoritesStore((state: { toggleFavorite: any; }) => state.toggleFavorite);
   console.log(favorites);
@@ -83,6 +84,7 @@ const CityScreen = ({ params }: Readonly<{ params: { id: string } }>) => {
     setIndex((prev) =>
       prev === 0 ? (currentPlace?.image?.length || 1) - 1 : prev - 1
     );
+
   };
 
   const goNext = () => {
@@ -90,6 +92,7 @@ const CityScreen = ({ params }: Readonly<{ params: { id: string } }>) => {
       prev === (currentPlace?.image?.length || 1) - 1 ? 0 : prev + 1
     );
   };
+
 
   return (
     <ScrollView style={styles.container}>
@@ -120,6 +123,7 @@ const CityScreen = ({ params }: Readonly<{ params: { id: string } }>) => {
           <Text style={styles.cityTitle}>{currentPlace?.location1}</Text>
           <FontAwesome
             name={
+
               favorites.find((p: { name: string | undefined; }) => p.name === currentPlace?.name)
                 ? "heart"
                 : "heart-o"

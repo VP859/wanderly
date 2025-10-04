@@ -32,9 +32,9 @@ export default function About(){
            key={index}
           href={`/miejsca/${place.name.toLocaleLowerCase()}`}>
       <ImageBackground
-        source={place.image} 
-        style={[oferta.container, { borderRadius: 30, overflow: 'hidden'},]}
-        imageStyle={{ borderRadius: 30 }}
+        source={place.image[0]} 
+        style={[oferta.container, { borderRadius: 10, overflow: 'hidden'},]}
+        imageStyle={{ borderRadius: 15 }}
         resizeMode="cover"
       >
       <View style={oferta.text}>
@@ -55,10 +55,7 @@ export default function About(){
     </ImageBackground>
     </Link>
          ))}  
-      <Link href="/">
-      <Text>go to home page</Text></Link>
-      <Link href="/fav_places">
-      <Text>go to about page</Text></Link>
+
     </ScrollView>
   )
 }
@@ -103,9 +100,9 @@ const oferta = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
     flexDirection:"column",
-    width: 380,
+    width: 370,
     height: 250,
-    borderRadius: 200,
+    borderRadius: 10,
     marginTop: 10,
   },
   text: {
@@ -116,7 +113,7 @@ const oferta = StyleSheet.create({
     paddingRight: 17,
     paddingBottom: 10,
     backgroundColor: 'white',
-    width: 350,
+    width: 340,
     height: 80,
     borderRadius: 10,
     marginBottom: 10,
