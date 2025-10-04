@@ -1,19 +1,19 @@
 import { Ionicons } from "@expo/vector-icons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
+import { ReadMoreText } from "@/components/readmore";
+import { places, tourList } from "@/constans";
 import { ImageBackground } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    Image,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from "react-native";
-import { ReadMoreText } from "../../../components/readmore";
-import { places, tourList } from "../../../constans";
 interface TourCardProps {
   cover: string;
   name: string;
