@@ -1,6 +1,7 @@
-import create from 'zustand';
 
-export const useFavoritesStore = create(set => ({
+import { create } from 'zustand';
+
+export const  useFavoritesStore = create(set => ({
   favorites: [],
 
   addFavorite: (place) =>

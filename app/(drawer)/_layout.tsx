@@ -85,6 +85,28 @@ const CustomDrawerComponent = (props: DrawerContentComponentProps) => {
           router.push("/(drawer)/chat");
         }}
       />
+      <DrawerItem
+        icon={({ color, size }) => (
+          <AntDesign
+            name="wechat-work"
+            size={34}
+            color={pathname == "/packaging" ? "white" : "black"}
+          />
+        )}
+        style={{
+          backgroundColor: pathname === "/packaging" ? "black" : "white",
+          borderRadius: 8,
+          marginBottom: 8,
+        }}
+        label={"Packaging"}
+        labelStyle={[
+          styles.navItemLabel,
+          { color: pathname === "/packaging" ? "white" : "black" },
+        ]}
+        onPress={() => {
+          router.push("/(drawer)/packaging");
+        }}
+      />
     </DrawerContentScrollView>
   );
 };
