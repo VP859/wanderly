@@ -1,20 +1,55 @@
 import { Ionicons } from "@expo/vector-icons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
-import React, { useState } from "react";
+import { ImageBackground } from "expo-image";
+import { useLocalSearchParams } from "expo-router";
+import React, { useEffect, useState } from "react";
 import {
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { ReadMoreText } from "../../../components/readmore";
+import { places, tourList } from "../../../constans";
+interface TourCardProps {
+  cover: string;
+  name: string;
+  days: number;
+  price: number;
+  rating: number;
+  reviews: number;
+}
 
-const CityScreen = () => {
+const TourCard = ({ cover, name, days, price, rating, reviews }: TourCardProps) => (
+  <View style={styles.tourCard}>
+    <Image
+      source={{
+        uri: cover,
+      }}
+      style={styles.tourImage}
+    />
+    <TouchableOpacity style={styles.heartIcon}>
+      <Ionicons name="heart-outline" size={18} color="#000" />
+    </TouchableOpacity>
+    <Text style={styles.tourName}>{name}</Text>
+    <Text style={styles.tourDetails}>{days} days · from ${price}/person</Text>
+    <Text style={styles.tourRating}>⭐ {rating} · {reviews} reviews</Text>
+  </View>
+);
+
+const CityScreen = ({ params }: Readonly<{ params: { id: string } }>) => {
+    const { id } = useLocalSearchParams();
   const [isFavorite, setIsFavorite] = useState(false);
+ const [currentPlace, setCurrentPlace] = useState(places.find(place => place.name.toLowerCase() === id?.toString().toLowerCase()) );
+  useEffect(() => {
+    const place = places.find(place => place.name.toLowerCase() === id?.toString().toLowerCase());
+    setCurrentPlace(place);
+  }, [id]);
 
+  console.log(currentPlace);
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
   };
@@ -22,14 +57,13 @@ const CityScreen = () => {
     <ScrollView style={styles.container}>
       {/* Tło - główne zdjęcie */}
       <Image
-        source={require("../../../assets/images/szyszkow.jpg")}
+        source={currentPlace?.image}
         style={styles.headerImage}
       />
-
       {/* Sekcja miasta */}
       <View style={styles.card}>
         <View style={styles.cityHeader}>
-          <Text style={styles.cityTitle}>Rio de Janeiro</Text>
+          <Text style={styles.cityTitle}>{currentPlace?.location1}</Text>
           <FontAwesome
             name={isFavorite ? "heart" : "heart-o"}
             size={24}
@@ -39,18 +73,13 @@ const CityScreen = () => {
           />
         </View>
 
-        <Text style={styles.subText}>🇧🇷 Brazil</Text>
+        <Text style={styles.subText}>{currentPlace?.cr} {currentPlace?.country}</Text>
         <TouchableOpacity>
           <Text style={styles.reviews}>⭐ 5.0 · 143 reviews</Text>
         </TouchableOpacity>
         <TouchableOpacity>
-          <ReadMoreText numberOfLines={3} style={styles.readMore}>
-            Rio de Janeiro to słynne miasto w Brazylii, znane z pięknych plaż
-            (jak Copacabana i Ipanema), słynnej góry Sugarloaf oraz ogromnej
-            statuy Chrystusa Odkupiciela na wzgórzu Corcovado. To miejsce
-            tętniące życiem, pełne kultury, muzyki (zwłaszcza samby) i barwnych
-            karnawałów, które przyciągają turystów z całego świata. Rio jest też
-            ważnym ośrodkiem gospodarczym i turystycznym Brazylii.
+          <ReadMoreText numberOfLines={3} >
+            {currentPlace?.description}
           </ReadMoreText>
         </TouchableOpacity>
       </View>
@@ -69,38 +98,29 @@ const CityScreen = () => {
         showsHorizontalScrollIndicator={false}
         style={styles.tourList}
       >
-        {/* Przykładowa wycieczka */}
-        <View style={styles.tourCard}>
-          <Image
-            source={{
-              uri: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
-            }}
-            style={styles.tourImage}
-          />
-          <TouchableOpacity style={styles.heartIcon}>
-            <Ionicons name="heart-outline" size={18} color="#000" />
-          </TouchableOpacity>
-          <Text style={styles.tourName}>Iconic Brazil</Text>
-          <Text style={styles.tourDetails}>8 days · from $659/person</Text>
-          <Text style={styles.tourRating}>⭐ 4.6 · 56 reviews</Text>
-        </View>
+        
+        {tourList.map((tour, index) => (
+            <TourCard
+              key={index}
+              cover={tour.image}
+                name={tour.name}
+                days={tour.days}
+                price={tour.price}
+                rating={tour.rating}
+                reviews={tour.reviews}
+            />
+        ))} 
+         {/* Przykładowe karty wycieczek */}
 
-        {/* Druga wycieczka – dodaj więcej jeśli chcesz */}
-        <View style={styles.tourCard}>
-          <Image
-            source={{
-              uri: "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1",
-            }}
-            style={styles.tourImage}
-          />
-          <TouchableOpacity style={styles.heartIcon}>
-            <Ionicons name="heart-outline" size={18} color="#000" />
-          </TouchableOpacity>
-          <Text style={styles.tourName}>Beach Adventure</Text>
-          <Text style={styles.tourDetails}>6 days · from $599/person</Text>
-          <Text style={styles.tourRating}>⭐ 4.8 · 64 reviews</Text>
-        </View>
       </ScrollView>
+        <ImageBackground
+        source={require('@/assets/images/mapa.png')} 
+        style={[styles.mapsContainer, { borderRadius: 30, overflow: 'hidden'},]}
+        imageStyle={{ borderRadius: 30 }}
+        resizeMode="cover"
+      >
+      
+    </ImageBackground>
     </ScrollView>
   );
 };
@@ -109,6 +129,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
     flex: 1,
+    paddingBottom:30
   },
   headerImage: {
     position: "relative",
@@ -129,6 +150,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   subText: {
+    alignItems: "center",
     marginTop: 4,
     fontSize: 14,
     color: "#666",
@@ -163,6 +185,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   tourList: {
+    overflowX: "scroll",
     paddingHorizontal: 10,
     marginTop: 10,
   },
@@ -173,6 +196,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f8f8f8",
     paddingBottom: 10,
     overflow: "hidden",
+    marginBottom:30
   },
   tourImage: {
     width: "100%",
@@ -202,6 +226,17 @@ const styles = StyleSheet.create({
     color: "#444",
     paddingHorizontal: 10,
     marginTop: 4,
+  },
+    mapsContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    flexDirection:"column",
+    width: 360,
+    height: 250,
+    borderRadius: 200,
+    marginTop: 10,
+    margin:"auto"
   },
 });
 

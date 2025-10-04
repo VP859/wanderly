@@ -4,17 +4,10 @@ import { Link } from 'expo-router';
 import React from 'react';
 import { ImageBackground, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-
+import { places } from "../../constans";
 
 export default function About(){
   const [isFocused, setIsFocused] = React.useState(false);
-  const places=[
-    {name:"Seszele", location1:"Magelang",location2:"East java", price:375, image:require('../../assets/images/seszele.jpg')},
-    {name:"Rzym", location1:"Magelang",location2:"East java", price:250, image:require('../../assets/images/rzym.jpg')},
-    {name:"Tatry", location1:"Magelang",location2:"East java", price:300, image:require('../../assets/images/tatry.jpg')},
-    {name:"Tatry", location1:"Magelang",location2:"East java", price:300, image:require('../../assets/images/tatry.jpg')},
-    {name:"Tatry", location1:"Magelang",location2:"East java", price:300, image:require('../../assets/images/tatry.jpg')},
-  ]
 
   return(
     <ScrollView style={{flex:1,backgroundColor:'white'}} contentContainerStyle={{alignItems:'center', gap:15}}>
@@ -34,7 +27,7 @@ export default function About(){
          {places.map((place,index)=>(
            <Link
            key={index}
-          href={`/miejsca/${index}`}>
+          href={`/miejsca/${place.name.toLocaleLowerCase()}`}>
       <ImageBackground
         source={place.image} 
         style={[oferta.container, { borderRadius: 30, overflow: 'hidden'},]}
