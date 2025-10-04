@@ -6,7 +6,7 @@ import { ReadMoreText } from "@/components/readmore";
 import { places } from "@/constans";
 import { ImageBackground } from "expo-image";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Image,
   ScrollView,
@@ -59,20 +59,11 @@ const TourCard = ({
 };
 
 const CityScreen = ({ params }: Readonly<{ params: { id: string } }>) => {
+  const router = useRouter();
   const { id } = useLocalSearchParams();
-  const [currentPlace, setCurrentPlace] = useState(
-    places.find(
-      (place) => place.name.toLowerCase() === id?.toString().toLowerCase()
-    )
+  const currentPlace = places.find(
+    (place) => place.name.toLowerCase() === id?.toString().toLowerCase()
   );
-  useEffect(() => {
-    const place = places.find(
-      (place) => place.name.toLowerCase() === id?.toString().toLowerCase()
-    );
-    setCurrentPlace(place);
-  }, [id]);
-
-  console.log(currentPlace);
 
   const [index, setIndex] = useState(1);
 
@@ -153,7 +144,7 @@ const CityScreen = ({ params }: Readonly<{ params: { id: string } }>) => {
       {/* Upcoming Tours */}
       <View style={styles.tourHeader}>
         <Text style={styles.tourTitle}>Upcoming tours</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push(`/(drawer)/Booking`)}>
           <Text style={styles.seeAll}>See all</Text>
         </TouchableOpacity>
       </View>

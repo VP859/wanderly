@@ -12,7 +12,7 @@ import { generateText } from "../lib/gemini";
 
 export default function Chat() {
   const [prompt, setPrompt] = useState(
-    "Napisz krótkie powitanie po polsku dla aplikacji podróżniczej."
+    "Jak najlepiej dostać się do Krakowa na Tauron Arenę?"
   );
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
@@ -36,9 +36,9 @@ export default function Chat() {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white", padding: 16 }}>
+    <View style={{ flex: 1, backgroundColor: "white", padding: 16,height:'100%' }}>
       <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 16 }}>
-        Chat z Gemini
+        Twój wirtualny asystent
       </Text>
 
       <TextInput
@@ -54,6 +54,7 @@ export default function Chat() {
           padding: 12,
           marginBottom: 16,
           textAlignVertical: "top",
+          bottom: 10,
         }}
       />
 

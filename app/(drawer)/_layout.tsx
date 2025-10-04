@@ -4,9 +4,9 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import {
-    DrawerContentComponentProps,
-    DrawerContentScrollView,
-    DrawerItem,
+  DrawerContentComponentProps,
+  DrawerContentScrollView,
+  DrawerItem,
 } from "@react-navigation/drawer";
 import { useNavigation } from "@react-navigation/native";
 import { router, usePathname } from "expo-router";
@@ -55,7 +55,7 @@ const CustomDrawerComponent = (props: DrawerContentComponentProps) => {
           borderRadius: 8,
           marginBottom: 8,
         }}
-        label={"Your places"}
+        label={"Your_places"}
         labelStyle={[
           styles.navItemLabel,
           { color: pathname === "/fav_places" ? "white" : "black" },
@@ -136,6 +136,10 @@ export default function Layout() {
         ? "Booking"
         : pathname === "/fav_places"
         ? "Your places"
+        : pathname === "/chat"
+        ? "Chat"
+        : pathname === "/packaging"
+        ? "Packaging"
         : places.find(
             (place) =>
               place.name.toLowerCase() === pathname.split("/").pop()
