@@ -35,12 +35,23 @@ export default function About() {
         <View style={styles.listElement}>
         {items.map((item, index) => (
             <View key={index} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-            <Switch
-                value={checkedItems[index]}
-                onValueChange={() => toggleItem(index)}
-                style={{ marginRight: 15 }}
-            />
-            <Text style={styles.listElementName}>{item}</Text>
+                <Switch
+                    value={checkedItems[index]}
+                    onValueChange={() => toggleItem(index)}
+                    style={{ marginRight: 15 }}
+                />
+                <Text style={styles.listElementName}>{item}</Text>
+                <Button 
+                    style={styles.removeBtn}
+                    onPress={() => {
+                        const newItems = items.filter((_, i) => i !== index);
+                        const newChecked = checkedItems.filter((_, i) => i !== index);
+                        setItems(newItems);
+                        setCheckedItems(newChecked);
+                    }}
+                >
+                    <Text style={{ color: '#fff', fontWeight: '600' }}>Usuń</Text>
+                </Button>
             </View>
         ))}
         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 16 }}>
@@ -59,8 +70,7 @@ export default function About() {
                 value={newItem}
                 onChangeText={setNewItem}
             />
-            <Button
-                
+            <Button style={styles.inputBtn}
                 onPress={() => {
                     if (newItem.trim()) {
                         setItems([...items, newItem.trim()]);
@@ -69,7 +79,7 @@ export default function About() {
                     }
                 }}
             >
-                Dodaj
+                <Text style={{ color: '#fff', fontWeight: '600' }}>Dodaj</Text>
             </Button>
         </View>
         </View>
@@ -116,12 +126,14 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 2,
         marginBottom: 16,
+        width: '100%',
     },
     listElementName: {
         fontSize: 18,
         color: '#374151',
         fontWeight: '500',
         letterSpacing: 0.5,
+        width: '95%',
     },
     progressBar: {
         color: '#38a169',
@@ -138,5 +150,26 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         marginTop: 8,
         overflow: 'hidden',
+    },
+    inputBtn: {
+        backgroundColor: '#3b82f6',
+        paddingVertical: 10,
+        paddingHorizontal: 16,
+        borderRadius: 12,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: "5%",
+        marginLeft: 15,
+        minWidth: 60,
+    },
+    removeBtn: {
+        marginLeft: 10,
+        backgroundColor: '#ef4444',
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        borderRadius: 12,
+        alignSelf: "flex-end",
+        width: "5%",
+        minWidth: 60,
     }
 });
