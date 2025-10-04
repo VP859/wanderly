@@ -58,10 +58,9 @@ export default function Layout(){
                                 headerLeft: () => (
                     <TouchableOpacity
                         onPress={() => navigation.goBack()}
-                        style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 10,marginRight:10 }}
+                        style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 10, marginRight: 10 }}
                     >
                         <Ionicons name="arrow-back" size={30} color="black" />
-                        
                     </TouchableOpacity>
                 ),
             }}
