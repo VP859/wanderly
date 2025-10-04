@@ -1,18 +1,19 @@
 import { Ionicons } from "@expo/vector-icons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
+import { useFavoritesStore } from "@/app/store";
 import { ReadMoreText } from "@/components/readmore";
-import { places, tourList } from "@/constans";
+import { places } from "@/constans";
 import { ImageBackground } from "expo-image";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 interface TourCardProps {
   cover: string;
@@ -23,62 +24,123 @@ interface TourCardProps {
   reviews: number;
 }
 
-const TourCard = ({ cover, name, days, price, rating, reviews }: TourCardProps) => (
-  <View style={styles.tourCard}>
-    <Image
-      source={{
-        uri: cover,
+const TourCard = ({
+  cover,
+  name,
+  days,
+  price,
+  rating,
+  reviews,
+}: TourCardProps) => {
+  const router = useRouter();
+  return (
+    <TouchableOpacity
+      style={styles.tourCard}
+      onPress={() => {
+        router.push(`/miejsca/${name.toLowerCase().replace(/\s+/g, "-")}`);
       }}
-      style={styles.tourImage}
-    />
-    <TouchableOpacity style={styles.heartIcon}>
-      <Ionicons name="heart-outline" size={18} color="#000" />
+    >
+      <Image
+        source={typeof cover === "string" ? { uri: cover } : cover}
+        style={styles.tourImage}
+      />
+      <TouchableOpacity style={styles.heartIcon}>
+        <Ionicons name="heart-outline" size={18} color="#000" />
+      </TouchableOpacity>
+      <Text style={styles.tourName}>{name}</Text>
+      <Text style={styles.tourDetails}>
+        {days} days · from ${price}/person
+      </Text>
+      <Text style={styles.tourRating}>
+        ⭐ {rating} · {reviews} reviews
+      </Text>
     </TouchableOpacity>
-    <Text style={styles.tourName}>{name}</Text>
-    <Text style={styles.tourDetails}>{days} days · from ${price}/person</Text>
-    <Text style={styles.tourRating}>⭐ {rating} · {reviews} reviews</Text>
-  </View>
-);
+  );
+};
 
 const CityScreen = ({ params }: Readonly<{ params: { id: string } }>) => {
-    const { id } = useLocalSearchParams();
-  const [isFavorite, setIsFavorite] = useState(false);
- const [currentPlace, setCurrentPlace] = useState(places.find(place => place.name.toLowerCase() === id?.toString().toLowerCase()) );
+  const { id } = useLocalSearchParams();
+  const [currentPlace, setCurrentPlace] = useState(
+    places.find(
+      (place) => place.name.toLowerCase() === id?.toString().toLowerCase()
+    )
+  );
   useEffect(() => {
-    const place = places.find(place => place.name.toLowerCase() === id?.toString().toLowerCase());
+    const place = places.find(
+      (place) => place.name.toLowerCase() === id?.toString().toLowerCase()
+    );
     setCurrentPlace(place);
   }, [id]);
 
   console.log(currentPlace);
-  const toggleFavorite = () => {
-    setIsFavorite(!isFavorite);
+
+  const [index, setIndex] = useState(1);
+  const favorites = useFavoritesStore((state: { favorites: any; }) => state.favorites);
+  const toggleFavorite = useFavoritesStore((state: { toggleFavorite: any; }) => state.toggleFavorite);
+  console.log(favorites);
+
+  const goPrev = () => {
+    setIndex((prev) =>
+      prev === 0 ? (currentPlace?.image?.length || 1) - 1 : prev - 1
+    );
   };
+
+  const goNext = () => {
+    setIndex((prev) =>
+      prev === (currentPlace?.image?.length || 1) - 1 ? 0 : prev + 1
+    );
+  };
+
   return (
     <ScrollView style={styles.container}>
       {/* Tło - główne zdjęcie */}
-      <Image
-        source={currentPlace?.image}
-        style={styles.headerImage}
-      />
+
+      <Image source={currentPlace?.image[index]} style={carosel.image} />
+      <TouchableOpacity
+        onPress={goPrev}
+        style={[
+          carosel.arrowButton,
+          { left: 0, position: "absolute", marginTop: 100 },
+        ]}
+      >
+        <Text style={carosel.arrowText}>⬅️</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={goNext}
+        style={[
+          carosel.arrowButton,
+          { right: 0, position: "absolute", marginTop: 100 },
+        ]}
+      >
+        <Text style={[carosel.arrowText]}>➡️</Text>
+      </TouchableOpacity>
       {/* Sekcja miasta */}
       <View style={styles.card}>
         <View style={styles.cityHeader}>
           <Text style={styles.cityTitle}>{currentPlace?.location1}</Text>
           <FontAwesome
-            name={isFavorite ? "heart" : "heart-o"}
+            name={
+              favorites.find((p: { name: string | undefined; }) => p.name === currentPlace?.name)
+                ? "heart"
+                : "heart-o"
+            }
             size={24}
-            color={isFavorite ? "red" : "black"}
-            onClick={toggleFavorite}
+            color={
+              favorites.find((p: { name: string | undefined; }) => p.name === currentPlace?.name) ? "red" : "black"
+            }
+            onPress={() => currentPlace && toggleFavorite(currentPlace)}
             style={{ cursor: "pointer" }}
           />
         </View>
 
-        <Text style={styles.subText}>{currentPlace?.cr} {currentPlace?.country}</Text>
+        <Text style={styles.subText}>
+          {currentPlace?.cr} {currentPlace?.country}
+        </Text>
         <TouchableOpacity>
           <Text style={styles.reviews}>⭐ 5.0 · 143 reviews</Text>
         </TouchableOpacity>
         <TouchableOpacity>
-          <ReadMoreText numberOfLines={3} >
+          <ReadMoreText numberOfLines={3}>
             {currentPlace?.description}
           </ReadMoreText>
         </TouchableOpacity>
@@ -98,29 +160,25 @@ const CityScreen = ({ params }: Readonly<{ params: { id: string } }>) => {
         showsHorizontalScrollIndicator={false}
         style={styles.tourList}
       >
-        
-        {tourList.map((tour, index) => (
-            <TourCard
-              key={index}
-              cover={tour.image}
-                name={tour.name}
-                days={tour.days}
-                price={tour.price}
-                rating={tour.rating}
-                reviews={tour.reviews}
-            />
-        ))} 
-         {/* Przykładowe karty wycieczek */}
-
+        {places.map((tour, index) => (
+          <TourCard
+            key={index}
+            cover={tour.image[0]}
+            name={tour.name}
+            days={tour.days}
+            price={tour.price}
+            rating={tour.rating}
+            reviews={tour.reviews}
+          />
+        ))}
+        {/* Przykładowe karty wycieczek */}
       </ScrollView>
-        <ImageBackground
-        source={require('@/assets/images/mapa.png')} 
-        style={[styles.mapsContainer, { borderRadius: 30, overflow: 'hidden'},]}
+      <ImageBackground
+        source={require("@/assets/images/mapa.png")}
+        style={[styles.mapsContainer, { borderRadius: 30, overflow: "hidden" }]}
         imageStyle={{ borderRadius: 30 }}
         resizeMode="cover"
-      >
-      
-    </ImageBackground>
+      ></ImageBackground>
     </ScrollView>
   );
 };
@@ -129,15 +187,11 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
     flex: 1,
-    paddingBottom:30
+    paddingBottom: 30,
   },
-  headerImage: {
-    position: "relative",
-    width: "100%",
-    height: 250,
-  },
+
   card: {
-    padding: 20,
+    padding: 15,
     backgroundColor: "#fff",
   },
   cityHeader: {
@@ -196,7 +250,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f8f8f8",
     paddingBottom: 10,
     overflow: "hidden",
-    marginBottom:30
+    marginBottom: 30,
   },
   tourImage: {
     width: "100%",
@@ -227,17 +281,37 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginTop: 4,
   },
-    mapsContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    flexDirection:"column",
+  mapsContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    flexDirection: "column",
     width: 360,
     height: 250,
     borderRadius: 200,
     marginTop: 10,
-    margin:"auto"
+    margin: "auto",
   },
 });
 
 export default CityScreen;
+
+const carosel = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 0,
+  },
+  arrowButton: {
+    position: "absolute",
+  },
+  arrowText: {
+    fontSize: 30,
+  },
+  image: {
+    width: "100%",
+    height: 230,
+    borderRadius: 10,
+  },
+});
