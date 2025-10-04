@@ -75,16 +75,7 @@ export default function About() {
         </View>
         <Text style={{ fontSize: 16, marginTop: 20 }}>Postęp pakowania:</Text>
         <Text style={{ marginTop: 5 }}>{Math.round(progress * 100)}%</Text>
-        <View
-            style={{
-                height: 16,
-                width: '100%',
-                backgroundColor: '#e2e8f0',
-                borderRadius: 8,
-                marginTop: 8,
-                overflow: 'hidden',
-            }}
-        >
+        <View style={styles.itemInput}>
             <View
                 style={{
                     height: '100%',
@@ -140,4 +131,12 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         flexWrap: 'nowrap',
     },
+    itemInput: {
+        height: 16,
+        width: '100%',
+        backgroundColor: '#e2e8f0',
+        borderRadius: 8,
+        marginTop: 8,
+        overflow: 'hidden',
+    }
 });
