@@ -8,7 +8,7 @@ export default function Page(){
       <Text>Index</Text>
       <Link href="/(drawer)/fav_places">
       <Text>go to fav_places page</Text></Link>
-      <Link href="/(drawer)/book">
+      <Link href="/(drawer)/Booking">
       <Text>go to booking page</Text></Link>
     </View>
   )

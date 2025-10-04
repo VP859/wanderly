@@ -25,7 +25,7 @@ const CustomDrawerComponent = (props: DrawerContentComponentProps) => {
                     {color:pathname === '/book' ? 'white' : 'black'}
                 ]}
                 onPress={() => {
-                    router.push('/(drawer)/book');
+                    router.push('/(drawer)/Booking');
                 }}
             />
             <DrawerItem

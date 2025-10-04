@@ -1,4 +1,5 @@
 import { places } from "@/constans";
+import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import {
@@ -9,7 +10,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { router, usePathname } from "expo-router";
 import { Drawer } from "expo-router/drawer";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 
 const CustomDrawerComponent = (props: DrawerContentComponentProps) => {
@@ -22,11 +23,11 @@ const CustomDrawerComponent = (props: DrawerContentComponentProps) => {
           <FontAwesome5
             name="map-marked-alt"
             size={34}
-            color={pathname === "/book" ? "white" : "black"}
+            color={pathname === "/Booking" ? "white" : "black"}
           />
         )}
         style={{
-          backgroundColor: pathname === "/book" ? "black" : "white",
+          backgroundColor: pathname === "/Booking" ? "black" : "white",
           borderRadius: 8,
           marginBottom: 8,
           marginTop: 40,
@@ -34,10 +35,10 @@ const CustomDrawerComponent = (props: DrawerContentComponentProps) => {
         label={"Booking"}
         labelStyle={[
           styles.navItemLabel,
-          { color: pathname === "/book" ? "white" : "black" },
+          { color: pathname === "/Booking" ? "white" : "black" },
         ]}
         onPress={() => {
-          router.push("/(drawer)/book");
+          router.push("/(drawer)/Booking");
         }}
       />
       <DrawerItem
@@ -62,6 +63,28 @@ const CustomDrawerComponent = (props: DrawerContentComponentProps) => {
           router.push("/(drawer)/fav_places");
         }}
       />
+      <DrawerItem
+        icon={({ color, size }) => (
+          <AntDesign
+            name="wechat-work"
+            size={34}
+            color={pathname == "/chat" ? "white" : "black"}
+          />
+        )}
+        style={{
+          backgroundColor: pathname === "/chat" ? "black" : "white",
+          borderRadius: 8,
+          marginBottom: 8,
+        }}
+        label={"Chat"}
+        labelStyle={[
+          styles.navItemLabel,
+          { color: pathname === "/chat" ? "white" : "black" },
+        ]}
+        onPress={() => {
+          router.push("/(drawer)/chat");
+        }}
+      />
     </DrawerContentScrollView>
   );
 };
@@ -69,19 +92,24 @@ const CustomDrawerComponent = (props: DrawerContentComponentProps) => {
 export default function Layout() {
   const navigation = useNavigation();
   const pathname = usePathname();
+  const [path, setPath] = useState<string | undefined>(undefined);
+  useEffect(() => {
+    setPath(
+      pathname === "/Booking"
+        ? "Booking"
+        : pathname === "/fav_places"
+        ? "Your places"
+        : places.find(
+            (place) =>
+              place.name.toLowerCase() === pathname.split("/").pop()
+          )?.name
+    );
+  }, [pathname]);
   return (
     <Drawer
       screenOptions={{
         headerShown: true,
-        headerTitle:
-          pathname === "/book"
-            ? "Booking"
-            : pathname === "/fav_places"
-            ? "Your places"
-            : places.find(
-                (place) =>
-                  place.name.toLowerCase() === pathname.split("/").pop()
-              )?.name || "Wanderly",
+        headerTitle: path ,
       }}
       drawerContent={(props) => <CustomDrawerComponent {...props} />}
     />
