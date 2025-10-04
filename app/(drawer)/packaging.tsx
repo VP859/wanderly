@@ -1,9 +1,10 @@
+import { Button } from '@react-navigation/elements';
 import { Link } from 'expo-router';
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, ScrollView, Platform, Switch } from 'react-native';
+import { Text, View, StyleSheet, ScrollView, Platform, Switch, TextInput } from 'react-native';
 
 export default function About() {
-  const items = [
+  const [items, setItems] = useState<string[]>([
     "Paszport",
     "Bilety lotnicze",
     "Karty płatnicze i pieniądze",
@@ -14,9 +15,10 @@ export default function About() {
     "Lekarstwa",
     "Słuchawki",
     "Ładowarka",
-  ];
+  ]);
 
-  const [checkedItems, setCheckedItems] = useState<boolean[]>(Array(items.length).fill(false));
+  const [checkedItems, setCheckedItems] = useState<boolean[]>(Array(10).fill(false));
+  const [newItem, setNewItem] = useState<string>('');
 
   const toggleItem = (index: number) => {
     const newChecked = [...checkedItems];
@@ -28,41 +30,70 @@ export default function About() {
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.listHeader}>Lista przedmiotów do spakowania</Text>
+        <Text style={styles.listHeader}>Lista przedmiotów do spakowania</Text>
 
-      <View style={styles.listElement}>
+        <View style={styles.listElement}>
         {items.map((item, index) => (
-          <View key={index} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+            <View key={index} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
             <Switch
-              value={checkedItems[index]}
-              onValueChange={() => toggleItem(index)}
-              style={{ marginRight: 15 }}
+                value={checkedItems[index]}
+                onValueChange={() => toggleItem(index)}
+                style={{ marginRight: 15 }}
             />
             <Text style={styles.listElementName}>{item}</Text>
-          </View>
+            </View>
         ))}
-      </View>
-      <Text style={{ fontSize: 16, marginTop: 20 }}>Postęp pakowania:</Text>
-      <Text style={{ marginTop: 5 }}>{Math.round(progress * 100)}%</Text>
-    <View
-        style={{
-            height: 16,
-            width: '100%',
-            backgroundColor: '#e2e8f0',
-            borderRadius: 8,
-            marginTop: 8,
-            overflow: 'hidden',
-        }}
-    >
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 16 }}>
+            <TextInput
+                style={{
+                    flex: 1,
+                    borderWidth: 1,
+                    borderColor: '#cbd5e1',
+                    borderRadius: 8,
+                    padding: 8,
+                    fontSize: 16,
+                    marginRight: 8,
+                    backgroundColor: '#f1f5f9',
+                }}
+                placeholder="Dodaj przedmiot..."
+                value={newItem}
+                onChangeText={setNewItem}
+            />
+            <Button
+                
+                onPress={() => {
+                    if (newItem.trim()) {
+                        setItems([...items, newItem.trim()]);
+                        setCheckedItems([...checkedItems, false]);
+                        setNewItem('');
+                    }
+                }}
+            >
+                Dodaj
+            </Button>
+        </View>
+        </View>
+        <Text style={{ fontSize: 16, marginTop: 20 }}>Postęp pakowania:</Text>
+        <Text style={{ marginTop: 5 }}>{Math.round(progress * 100)}%</Text>
         <View
             style={{
-                height: '100%',
-                width: `${Math.round(progress * 100)}%`,
-                backgroundColor: '#38a169',
+                height: 16,
+                width: '100%',
+                backgroundColor: '#e2e8f0',
                 borderRadius: 8,
+                marginTop: 8,
+                overflow: 'hidden',
             }}
-        />
-    </View>
+        >
+            <View
+                style={{
+                    height: '100%',
+                    width: `${Math.round(progress * 100)}%`,
+                    backgroundColor: '#38a169',
+                    borderRadius: 8,
+                }}
+            />
+        </View>
       
     </ScrollView>
   );
