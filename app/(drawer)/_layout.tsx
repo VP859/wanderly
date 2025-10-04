@@ -2,6 +2,7 @@ import { places } from "@/constans";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import {
     DrawerContentComponentProps,
     DrawerContentScrollView,
@@ -11,7 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import { router, usePathname } from "expo-router";
 import { Drawer } from "expo-router/drawer";
 import React, { useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text } from "react-native";
 
 const CustomDrawerComponent = (props: DrawerContentComponentProps) => {
   const pathname = usePathname();
@@ -79,7 +80,7 @@ const CustomDrawerComponent = (props: DrawerContentComponentProps) => {
         label={"Chat"}
         labelStyle={[
           styles.navItemLabel,
-          { color: pathname === "/chat" ? "white" : "black" },
+          { color: pathname === "/Chat" ? "white" : "black" },
         ]}
         onPress={() => {
           router.push("/(drawer)/chat");
@@ -87,11 +88,7 @@ const CustomDrawerComponent = (props: DrawerContentComponentProps) => {
       />
       <DrawerItem
         icon={({ color, size }) => (
-          <AntDesign
-            name="wechat-work"
-            size={34}
-            color={pathname == "/packaging" ? "white" : "black"}
-          />
+          <FontAwesome5 name="tasks" size={24} color="black" />
         )}
         style={{
           backgroundColor: pathname === "/packaging" ? "black" : "white",
@@ -105,6 +102,24 @@ const CustomDrawerComponent = (props: DrawerContentComponentProps) => {
         ]}
         onPress={() => {
           router.push("/(drawer)/packaging");
+        }}
+      />
+      <DrawerItem
+        icon={({ color, size }) => (
+          <MaterialCommunityIcons name="weather-cloudy" size={24} color="black" />
+        )}
+        style={{
+          backgroundColor: pathname === "/weather" ? "black" : "white",
+          borderRadius: 8,
+          marginBottom: 8,
+        }}
+        label={"Weather"}
+        labelStyle={[
+          styles.navItemLabel,
+          { color: pathname === "/weather" ? "white" : "black" },
+        ]}
+        onPress={() => {
+          router.push("/(drawer)/weather");
         }}
       />
     </DrawerContentScrollView>
