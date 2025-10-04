@@ -32,7 +32,7 @@ const TourCard = ({
   rating,
   reviews,
 }: TourCardProps) => {
-
+  const router = useRouter();
   return (
     <TouchableOpacity
       style={styles.tourCard}
