@@ -1,5 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { GEMINI_API_KEY } from ".././config";
+import { GEMINI_API_KEY } from "@env";
 
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 
@@ -9,8 +9,6 @@ export async function generateText(prompt: string): Promise<string> {
       "GEMINI_API_KEY not configured. Add your API key to app/config.ts"
     );
   }
-
-  // Aktualne modele Gemini API (2025)
 
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
