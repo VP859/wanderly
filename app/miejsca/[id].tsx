@@ -131,7 +131,8 @@ const CityScreen = ({ params }: Readonly<{ params: { id: string } }>) => {
           />
         </View>
         {/*Generate trip plan*/}
-        <View>
+        <View style={styles.genCOntainer}>
+          <View>
             <Button 
               style={styles.planGen}
               title="Generate travel plan"
@@ -139,6 +140,16 @@ const CityScreen = ({ params }: Readonly<{ params: { id: string } }>) => {
               <Text style={styles.planGenText}>Przejdź do planu podróży</Text>
             </Button>
           </View>
+          <View>
+            <Button 
+              style={styles.planGen}
+              title="Generate packaging list"
+              onPress={() => router.push(`/(drawer)/packaging?placename=${currentPlace?.name}`)}>
+              <Text style={styles.planGenText}>Pryzgotuj się do podróży</Text>
+            </Button>
+          </View>
+        </View>
+        
         <Text style={styles.subText}>
           {currentPlace?.cr} {currentPlace?.country}
         </Text>
@@ -302,17 +313,27 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#007AFF',
     color: 'white',
-    width: "50%",
+    width: "100%",
     borderRadius: 8,
     textAlign: 'center',
     marginTop: 10,
-    alignSelf: 'center',
   },
   planGenText: {
     color: 'white',
     fontWeight: '500',
     textAlign: 'center',
-  }
+    width: "100%",
+  },
+  genCOntainer: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 10,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+    gap: 10,
+  },
 });
 
 export default CityScreen;

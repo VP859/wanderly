@@ -1,22 +1,13 @@
 import { Button } from '@react-navigation/elements';
 import { Link } from 'expo-router';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, ScrollView, Platform, Switch, TextInput } from 'react-native';
+import { GEMINI_API_KEY } from "@env";
+import { useLocalSearchParams } from "expo-router";
+
 
 export default function About() {
-  const [items, setItems] = useState<string[]>([
-    "Paszport",
-    "Bilety lotnicze",
-    "Karty płatnicze i pieniądze",
-    "Ubania",
-    "Buty",
-    "Szczoteczka do zębów",
-    "Kosmetyki",
-    "Lekarstwa",
-    "Słuchawki",
-    "Ładowarka",
-  ]);
-
+  const [items, setItems] = useState<string[]>([]);
   const [checkedItems, setCheckedItems] = useState<boolean[]>(Array(10).fill(false));
   const [newItem, setNewItem] = useState<string>('');
 
@@ -24,9 +15,78 @@ export default function About() {
     const newChecked = [...checkedItems];
     newChecked[index] = !newChecked[index];
     setCheckedItems(newChecked);
-  };
+  }; 
 
-  const progress = checkedItems.filter(Boolean).length / items.length;
+  let progress = checkedItems.filter(Boolean).length / items.length;
+
+  if (items.length === 0) {
+    progress = 0;
+  }
+  
+
+    const params = useLocalSearchParams<{ placename: string }>();
+    const [placeName, setPlaceName] = useState<string>("");
+    let [outputText, setOutputText] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    
+    useEffect(() => {
+        if (params.placename) setPlaceName(params.placename);
+    }, [params]);
+    
+    if (params.placename == "undefined") {
+          const [items, setItems] = useState<string[]>([
+          "Paszport",
+          "Bilety lotnicze",
+          "Karty płatnicze i pieniądze",
+          "Ubania",
+          "Buty",
+          "Szczoteczka do zębów",
+          "Kosmetyki",
+          "Lekarstwa",
+          "Słuchawki",
+          "Ładowarka",
+        ]);
+    }
+    else {
+        useEffect(() => {
+            if (!placeName) return;
+
+            const userPrompt = `Wygeneruj tylko listę rzeczy do spakowania na wyjazd do ${placeName} na 3 dni. Elementy listy powinny być odddzielone tylko znakiem ",". Lista może zawierać maksymalnie 10 elementów. Nie dodawaj żadnych powitań, wyjaśnień ani podsumowań. bez żadnych dodatkowych komentarzy.`;
+
+            const callGeminiApi = async (prompt: string) => {
+                setLoading(true);
+                try {
+                    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }),
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`Gemini API error: ${response.status} - ${await response.text()}`);
+                    }
+
+                    const data = await response.json();
+                    const geminiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                    setOutputText(geminiResponse || 'No response from Gemini');
+                } catch (error: any) {
+                    console.error('Error calling Gemini API:', error);
+                    setOutputText(`Error: ${error.message}`);
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            callGeminiApi(userPrompt);
+        }, [placeName]);
+
+        for (const item of outputText.split(",")) {
+            if (item.trim() && !items.includes(item.trim())) {
+                items.push(item.trim());
+            }
+        }
+    }
 
   return (
     <ScrollView style={styles.container}>
