@@ -151,8 +151,7 @@ useEffect(() => {
                 }}
             />
         </View>
-      <Button style={styles.inputBtn}
-              
+      <Button style={styles.inputBtn}   
             >
                 <Text style={{ color: '#fff', fontWeight: '600' }}>Drukuj</Text>
             </Button>

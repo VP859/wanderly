@@ -3,6 +3,9 @@ import React from "react";
 import {
   Image,
   ImageBackground,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -50,6 +53,7 @@ export default function App() {
           left: 20,
           zIndex: 10,
           borderRadius: 10,
+          marginTop:30
         }}
       />
       <Text
@@ -62,6 +66,7 @@ export default function App() {
           color: "black",
           fontFamily: "Nunito",
           zIndex: 10,
+          marginTop:30
         }}
       >
         Wanderly
@@ -117,6 +122,7 @@ export default function App() {
             left: 20,
             zIndex: 10,
             borderRadius: 10,
+            marginTop:30
           }}
         />
         <Text
@@ -129,6 +135,7 @@ export default function App() {
             color: "black",
             fontFamily: "Nunito",
             zIndex: 10,
+            marginTop:30
           }}
         >
           Wanderly
@@ -138,7 +145,13 @@ export default function App() {
           source={require("@/assets/images/droga.jpg")}
           style={styles.image}
         >
-          <View style={[styles.card, { paddingBottom: 30 }]}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={styles.keyboardAvoidingContainer}
+        >
+          <ScrollView contentContainerStyle={styles.scrollContentContainer}>
+
+            <View style={[styles.card, { paddingBottom: 30, marginTop: 'auto' }]}>
             <View style={styles.tabContainer}>
               <TouchableOpacity onPress={() => setAuthMode("login")}>
                 <Text style={[styles.tabText, authMode === "login" && styles.activeTabText]}>
@@ -218,14 +231,21 @@ export default function App() {
                 </TouchableOpacity>
               </>
             )}
-          </View>
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
         </ImageBackground>
       </View>
     );
   }
-  return null;
 }
-
+{/**keyboardAvoidingContainer: {
+    flex: 1,
+  },
+  scrollContentContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+  }, */}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -317,5 +337,12 @@ const styles = StyleSheet.create({
     borderColor:"#FFB300",
     color: '#000',
     fontWeight: 'bold',
+  },
+  keyboardAvoidingContainer: {
+    flex: 1,
+  },
+  scrollContentContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
   },
 });
