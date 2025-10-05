@@ -12,7 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import { router, usePathname } from "expo-router";
 import { Drawer } from "expo-router/drawer";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet } from "react-native";
 
 const CustomDrawerComponent = (props: DrawerContentComponentProps) => {
   const pathname = usePathname();
@@ -80,7 +80,7 @@ const CustomDrawerComponent = (props: DrawerContentComponentProps) => {
         label={"Chat"}
         labelStyle={[
           styles.navItemLabel,
-          { color: pathname === "/Chat" ? "white" : "black" },
+          { color: pathname === "/chat" ? "white" : "black" },
         ]}
         onPress={() => {
           router.push("/(drawer)/chat");
@@ -88,7 +88,7 @@ const CustomDrawerComponent = (props: DrawerContentComponentProps) => {
       />
       <DrawerItem
         icon={({ color, size }) => (
-          <FontAwesome5 name="tasks" size={24} color="black" />
+          <FontAwesome5 name="tasks" size={24} color={pathname == "/packaging" ? "white" : "black"} />
         )}
         style={{
           backgroundColor: pathname === "/packaging" ? "black" : "white",
@@ -106,7 +106,7 @@ const CustomDrawerComponent = (props: DrawerContentComponentProps) => {
       />
       <DrawerItem
         icon={({ color, size }) => (
-          <MaterialCommunityIcons name="weather-cloudy" size={24} color="black" />
+          <MaterialCommunityIcons name="weather-cloudy" size={24} color={pathname == "/weather" ? "white" : "black"} />
         )}
         style={{
           backgroundColor: pathname === "/weather" ? "black" : "white",
