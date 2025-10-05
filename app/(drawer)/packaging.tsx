@@ -56,16 +56,7 @@ export default function About() {
         ))}
         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 16 }}>
             <TextInput
-                style={{
-                    flex: 1,
-                    borderWidth: 1,
-                    borderColor: '#cbd5e1',
-                    borderRadius: 8,
-                    padding: 8,
-                    fontSize: 16,
-                    marginRight: 8,
-                    backgroundColor: '#f1f5f9',
-                }}
+                style={styles.itemInput}
                 placeholder="Dodaj przedmiot..."
                 value={newItem}
                 onChangeText={setNewItem}
@@ -144,7 +135,7 @@ const styles = StyleSheet.create({
         flexWrap: 'nowrap',
     },
     itemInput: {
-        height: 16,
+        height: 40,
         width: '100%',
         backgroundColor: '#e2e8f0',
         borderRadius: 8,
@@ -164,12 +155,15 @@ const styles = StyleSheet.create({
     },
     removeBtn: {
         marginLeft: 10,
+        fontSize: 12,
         backgroundColor: '#ef4444',
-        paddingHorizontal: 10,
+        borderColor: 'black',
+        borderWidth: 1,
+        paddingHorizontal: 3,
         paddingVertical: 6,
         borderRadius: 12,
         alignSelf: "flex-end",
-        width: "5%",
+        width: "4%",
         minWidth: 60,
     }
 });

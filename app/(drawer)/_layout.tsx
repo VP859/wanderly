@@ -3,6 +3,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import {
   DrawerContentComponentProps,
   DrawerContentScrollView,
@@ -33,7 +34,7 @@ const CustomDrawerComponent = (props: DrawerContentComponentProps) => {
           marginBottom: 8,
           marginTop: 40,
         }}
-        label={"Booking"}
+        label={"Rezerwacje"}
         labelStyle={[
           styles.navItemLabel,
           { color: pathname === "/Booking" ? "white" : "black" },
@@ -55,7 +56,7 @@ const CustomDrawerComponent = (props: DrawerContentComponentProps) => {
           borderRadius: 8,
           marginBottom: 8,
         }}
-        label={"Your_places"}
+        label={"Twoje miejsca"}
         labelStyle={[
           styles.navItemLabel,
           { color: pathname === "/fav_places" ? "white" : "black" },
@@ -77,7 +78,7 @@ const CustomDrawerComponent = (props: DrawerContentComponentProps) => {
           borderRadius: 8,
           marginBottom: 8,
         }}
-        label={"Chat"}
+        label={"Czat"}
         labelStyle={[
           styles.navItemLabel,
           { color: pathname === "/Chat" ? "white" : "black" },
@@ -95,7 +96,7 @@ const CustomDrawerComponent = (props: DrawerContentComponentProps) => {
           borderRadius: 8,
           marginBottom: 8,
         }}
-        label={"Packaging"}
+        label={"Pakowanie"}
         labelStyle={[
           styles.navItemLabel,
           { color: pathname === "/packaging" ? "white" : "black" },
@@ -113,13 +114,31 @@ const CustomDrawerComponent = (props: DrawerContentComponentProps) => {
           borderRadius: 8,
           marginBottom: 8,
         }}
-        label={"Weather"}
+        label={"Pogoda"}
         labelStyle={[
           styles.navItemLabel,
           { color: pathname === "/weather" ? "white" : "black" },
         ]}
         onPress={() => {
           router.push("/(drawer)/weather");
+        }}
+      />
+      <DrawerItem
+        icon={({ color, size }) => (
+          <MaterialIcons name="mode-of-travel" size={24} color="black" />
+        )}
+        style={{
+          backgroundColor: pathname === "/plan" ? "black" : "white",
+          borderRadius: 8,
+          marginBottom: 8,
+        }}
+        label={"Plan podróży"}
+        labelStyle={[
+          styles.navItemLabel,
+          { color: pathname === "/plan" ? "white" : "black" },
+        ]}
+        onPress={() => {
+          router.push("/(drawer)/plan");
         }}
       />
     </DrawerContentScrollView>
@@ -133,13 +152,17 @@ export default function Layout() {
   useEffect(() => {
     setPath(
       pathname === "/Booking"
-        ? "Booking"
+        ? "Rezerwacje"
         : pathname === "/fav_places"
-        ? "Your places"
+        ? "Twoje miejsca"
         : pathname === "/chat"
-        ? "Chat"
+        ? "Czat"
         : pathname === "/packaging"
-        ? "Packaging"
+        ? "Pakowanie"
+        :pathname === "/weather"
+        ? "Pogoda"
+        :pathname === "/plan"
+        ? "Plan podróży"
         : places.find(
             (place) =>
               place.name.toLowerCase() === pathname.split("/").pop()
