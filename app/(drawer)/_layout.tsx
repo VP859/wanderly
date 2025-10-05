@@ -125,17 +125,17 @@ const CustomDrawerComponent = (props: DrawerContentComponentProps) => {
       />
       <DrawerItem
         icon={({ color, size }) => (
-          <MaterialIcons name="mode-of-travel" size={24} color="black" />
+          <MaterialIcons name="" size={24} color="black" />
         )}
         style={{
-          backgroundColor: pathname === "/plan" ? "black" : "white",
+          backgroundColor: pathname === "/plan" ? "white" : "white",
           borderRadius: 8,
           marginBottom: 8,
         }}
-        label={"Plan podróży"}
+        label={""}
         labelStyle={[
           styles.navItemLabel,
-          { color: pathname === "/plan" ? "white" : "black" },
+          { color: pathname === "/plan" ? "white" : "white" },
         ]}
         onPress={() => {
           router.push("/(drawer)/plan");
