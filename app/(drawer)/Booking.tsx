@@ -41,8 +41,6 @@ export default function About(){
         <View style={{flexDirection:'row', alignItems:'center',justifyContent:"space-between", gap:2}}>
           <Text style={{fontSize:26,paddingTop:5,paddingLeft:5}}>{place.name}</Text>
           <View style={{flexDirection:'row', alignItems:'center', gap:2}}>
-            <Text style={{fontSize:20,paddingTop:5,fontWeight:"700"}}>${place.price}</Text>
-            <Text style={{fontSize:17,paddingTop:5,fontWeight:"400",color:"gray"}}>/day</Text>
           </View>
         </View>
         <View style={{flexDirection:'row', alignItems:'center', gap:2}}>

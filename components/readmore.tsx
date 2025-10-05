@@ -15,7 +15,7 @@ export const ReadMoreText = ({ children, numberOfLines = 3 }: { children: ReactN
       </Text>
       <TouchableOpacity onPress={() => setShowMore(!showMore)}>
         <Text style={styles.readMoreText}>
-          {showMore ? "Read less" : "Read more"}
+          {showMore ? "Czytaj mniej..." : "Czytaj więcej..."}
         </Text>
       </TouchableOpacity>
     </View>
