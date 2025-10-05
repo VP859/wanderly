@@ -5,9 +5,9 @@ import {
   ActivityIndicator,
   ScrollView,
   StyleSheet,
-  Text
+  Text,
+  TouchableOpacity
 } from "react-native";
-
 export default function GenerateScreen() {
   const params = useLocalSearchParams<{ placename: string }>();
   const [outputText, setOutputText] = useState("");
@@ -68,6 +68,14 @@ export default function GenerateScreen() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {renderContent()}
+      <TouchableOpacity style={{
+        backgroundColor: '#000',
+        padding: 15,
+        borderRadius: 10,
+        marginTop: 20}}>
+        <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }} onPress={() => console.log('Pressed')
+        }>Udostepnij plan</Text>
+        </TouchableOpacity>
     </ScrollView>
   );
 }
