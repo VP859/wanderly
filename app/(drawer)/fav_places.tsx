@@ -9,7 +9,8 @@ export default function FavPlaces() {
   return (
     <View style={{flex:1,backgroundColor:'white', alignItems:'center', gap:15}} >
       {favorites.length === 0 ? (
-        <Text>Brak ulubionych miejsc</Text>
+        <Text style={{fontSize:30, marginTop:50,fontWeight:'700',color:'gray'
+        }}>Brak ulubionych miejsc</Text>
       ) : (
         favorites.map((place:any,) => (
           <Link

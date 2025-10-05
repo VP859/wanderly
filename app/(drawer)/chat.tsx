@@ -24,7 +24,9 @@ export default function Chat() {
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([
+    { role: "model", text: "Cześć! W czym mogę pomóc?" },
+  ]);
 
   const handleGenerate = async () => {
     if (!prompt.trim()) return;
