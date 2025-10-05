@@ -15,6 +15,9 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { Button } from "@react-navigation/elements";
+import { GenerateScreen } from "../(drawer)/plan";
+
 interface TourCardProps {
   cover: string;
   name: string;
@@ -127,7 +130,15 @@ const CityScreen = ({ params }: Readonly<{ params: { id: string } }>) => {
             style={{ cursor: "pointer" }}
           />
         </View>
-
+        {/*Generate trip plan*/}
+        <View>
+            <Button 
+              style={styles.planGen}
+              title="Generate travel plan"
+              onPress={() => router.push(`/(drawer)/plan?placename=${currentPlace?.name}`)}>
+              <Text style={styles.planGenText}>Przejdź do planu podróży</Text>
+            </Button>
+          </View>
         <Text style={styles.subText}>
           {currentPlace?.cr} {currentPlace?.country}
         </Text>
@@ -287,6 +298,21 @@ const styles = StyleSheet.create({
     marginTop: 10,
     margin: "auto",
   },
+  planGen: {
+    padding: 10,
+    backgroundColor: '#007AFF',
+    color: 'white',
+    width: "50%",
+    borderRadius: 8,
+    textAlign: 'center',
+    marginTop: 10,
+    alignSelf: 'center',
+  },
+  planGenText: {
+    color: 'white',
+    fontWeight: '500',
+    textAlign: 'center',
+  }
 });
 
 export default CityScreen;
