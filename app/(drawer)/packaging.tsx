@@ -1,9 +1,8 @@
-import { Button } from '@react-navigation/elements';
-import { Link } from 'expo-router';
-import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, ScrollView, Platform, Switch, TextInput } from 'react-native';
 import { GEMINI_API_KEY } from "@env";
+import { Button } from '@react-navigation/elements';
 import { useLocalSearchParams } from "expo-router";
+import React, { useEffect, useState } from 'react';
+import { Platform, ScrollView, StyleSheet, Switch, Text, TextInput, View } from 'react-native';
 
 
 export default function About() {
@@ -152,7 +151,11 @@ useEffect(() => {
                 }}
             />
         </View>
-      
+      <Button style={styles.inputBtn}
+              
+            >
+                <Text style={{ color: '#fff', fontWeight: '600' }}>Drukuj</Text>
+            </Button>
     </ScrollView>
   );
 }
@@ -207,17 +210,20 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         marginTop: 8,
         overflow: 'hidden',
+        padding:10,
     },
     inputBtn: {
         backgroundColor: '#3b82f6',
         paddingVertical: 10,
-        paddingHorizontal: 16,
+        paddingLeft:20,
+        paddingRight:20,
         borderRadius: 12,
-        justifyContent: 'center',
+        alignSelf:'flex-end',
         alignItems: 'center',
-        width: "5%",
+        width: "10%",
         marginLeft: 15,
         minWidth: 60,
+        marginTop: 8,
     },
     removeBtn: {
         marginLeft: 10,

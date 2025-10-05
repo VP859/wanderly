@@ -15,8 +15,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Button } from "@react-navigation/elements";
-import { GenerateScreen } from "../(drawer)/plan";
 
 interface TourCardProps {
   cover: string;
@@ -51,9 +49,6 @@ const TourCard = ({
         <Ionicons name="heart-outline" size={18} color="#000" />
       </TouchableOpacity>
       <Text style={styles.tourName}>{name}</Text>
-      <Text style={styles.tourDetails}>
-        {days} days · from ${price}/person
-      </Text>
       <Text style={styles.tourRating}>
         ⭐ {rating} · {reviews} reviews
       </Text>
@@ -132,22 +127,18 @@ const CityScreen = ({ params }: Readonly<{ params: { id: string } }>) => {
         </View>
         {/*Generate trip plan*/}
         <View style={styles.genCOntainer}>
-          <View>
-            <Button 
-              style={styles.planGen}
-              title="Generate travel plan"
-              onPress={() => router.push(`/(drawer)/plan?placename=${currentPlace?.name}`)}>
-              <Text style={styles.planGenText}>Przejdź do planu podróży</Text>
-            </Button>
-          </View>
-          <View>
-            <Button 
-              style={styles.planGen}
-              title="Generate packaging list"
-              onPress={() => router.push(`/(drawer)/packaging?placename=${currentPlace?.name}`)}>
-              <Text style={styles.planGenText}>Pryzgotuj się do podróży</Text>
-            </Button>
-          </View>
+          <TouchableOpacity
+            style={styles.planGenButton}
+            onPress={() => router.push(`/(drawer)/plan?placename=${currentPlace?.name}`)}
+          >
+            <Text style={styles.planGenText}>Plan podróży</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.planGenButton1}
+            onPress={() => router.push(`/(drawer)/packaging?placename=${currentPlace?.name}`)}
+          >
+            <Text style={styles.planGenText1}>Lista do pakowania</Text>
+          </TouchableOpacity>
         </View>
         
         <Text style={styles.subText}>
@@ -165,7 +156,7 @@ const CityScreen = ({ params }: Readonly<{ params: { id: string } }>) => {
 
       {/* Upcoming Tours */}
       <View style={styles.tourHeader}>
-        <Text style={styles.tourTitle}>Upcoming tours</Text>
+        <Text style={styles.tourTitle}>Też warto zobaczyć</Text>
         <TouchableOpacity onPress={() => router.push(`/(drawer)/Booking`)}>
           <Text style={styles.seeAll}>See all</Text>
         </TouchableOpacity>
@@ -309,29 +300,41 @@ const styles = StyleSheet.create({
     marginTop: 10,
     margin: "auto",
   },
-  planGen: {
-    padding: 10,
+  planGenButton: {
+    flex: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
     backgroundColor: '#007AFF',
-    color: 'white',
-    width: "100%",
     borderRadius: 8,
-    textAlign: 'center',
     marginTop: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+   planGenButton1: {
+    flex: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    backgroundColor: 'white',
+    borderRadius: 8,
+    marginTop: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: '#007AFF',
   },
   planGenText: {
     color: 'white',
-    fontWeight: '500',
+    fontWeight: '600',
     textAlign: 'center',
-    width: "100%",
+  },
+  planGenText1: {
+    color: '#007AFF',
+    fontWeight: '600',
+    textAlign: 'center',
   },
   genCOntainer: {
-    width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: 10,
-    marginBottom: 10,
-    paddingHorizontal: 10,
     gap: 10,
   },
 });

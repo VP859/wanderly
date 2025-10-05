@@ -34,7 +34,7 @@ const CustomDrawerComponent = (props: DrawerContentComponentProps) => {
           marginBottom: 8,
           marginTop: 40,
         }}
-        label={"Rezerwacje"}
+        label={"Popularne miejsca"}
         labelStyle={[
           styles.navItemLabel,
           { color: pathname === "/Booking" ? "white" : "black" },
@@ -152,7 +152,7 @@ export default function Layout() {
   useEffect(() => {
     setPath(
       pathname === "/Booking"
-        ? "Rezerwacje"
+        ? "Popularne miejsca"
         : pathname === "/fav_places"
         ? "Twoje miejsca"
         : pathname === "/chat"
